@@ -11,6 +11,10 @@ app.get("/api/v1", (req, res) => {
   res.status(200).send("Welcome :)")
 })
 
+app.get("/api/v1/pipa", (req, res) => {
+  res.status(200).send("Pipa :)")
+})
+
 app.listen(PORT, () => {
   console.log(`server started at port ${PORT}`);
 })
