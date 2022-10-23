@@ -1,0 +1,32 @@
+name: TestsAndDeploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+
+  deploy:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [ 16.x ]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      # Setup key
+      - run: echo "🔎 Setup Key"
+      - run: set -eu
+      - run: mkdir "$HOME/.ssh"
+      - run: echo "${{ secrets.SSH_KEY }}" > "$HOME/.ssh/key"
+      - run: chmod 600 "$HOME/.ssh/key"
+      # Build
+      - run: echo "🐧 Install dependencies and build"
+      - run: npm ci
+      - run: npm run build
+      # Deploy
+      - run: echo "🎉 Deploy"
+      - run: rsync -e "ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" -a --progress build root@213.189.218.79:~/sites/crash-studio-api
