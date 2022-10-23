@@ -7,7 +7,7 @@ app.use(cors())
 
 const PORT = 8080
 
-app.get("/api", (req, res) => {
+app.get("/api/v1", (req, res) => {
   res.status(200).send("Welcome :)")
 })
 
