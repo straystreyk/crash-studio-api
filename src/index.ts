@@ -7,11 +7,7 @@ app.use(cors())
 
 const PORT = 8080
 
-app.get("/api/v1", (req, res) => {
-  res.status(200).send("Welcome :)")
-})
-
-app.get("/api/v1/pipa", (req, res) => {
+app.get("/v1/pipa", (req, res) => {
   res.status(200).send("Pipa :)")
 })
 
